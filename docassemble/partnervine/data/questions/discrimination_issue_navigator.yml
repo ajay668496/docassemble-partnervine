@@ -1,0 +1,1633 @@
+---
+metadata:
+  title: |
+   Discrimination Claims Navigator
+  short title: |
+    Discrimination Claims Navigator
+  description: |
+    Discrimination Claims Navigator
+  exit url: |
+    http://access.partnervine.com/playground
+  exit button color: primary
+  authors:
+    - name: Jordan Urstadt
+      organization: PartnerVine LLC
+  revision_date: 2021-03-06
+  require login: True
+  required privileges:
+    - admin
+    - developer
+    - advocate
+---
+sections:
+  - Introduction
+  - Free exercise of religion
+  - Civil Rights Act
+  - Disabilities Act
+  - Equal Pay Act
+  - Age Discrimination Act
+  - Genetic Information Nondiscrimination Act
+  - Conclusion
+---
+features:
+  question help button: True
+  navigation: True
+  small screen navigation: False
+  progress bar: True
+  javascript: custom.js
+  css: custom.css
+---
+interview help:
+  label: Help
+  heading: About the Help feature
+  content: |
+    When there is help specific to a question, a "Help" button will show up next to the other buttons on the page.
+    
+    When a law firm has provided a specific answer, the logo of the firm will show up on your screen and we will note the law firms' contribution here.
+---
+template: disclaimer
+content: |
+  The Discrimination Claims Navigator summarizes US federal discrimination law for employees. We do not cover discrimination not related to your employment or claims under the laws of the state or territory where you reside.
+  
+   The Discrimination Claims Navigator will provide you with a standardized analysis of your claims, but will not help you with filing your claims. **Please note that your claims may be subject to filing deadlines, and you are responsible for the preparation and timely filing of your claims.**
+---
+objects:
+  - claims: DAList.using(there_is_another=False, there_are_any=False)
+  - content: DADict
+  - questions: DADict.using(there_is_another=False, there_are_any=False)
+  - noclaims: DAList.using(there_is_another=False, there_are_any=False)
+---
+initial: True
+code: |
+  if returning_user(minutes=0.5):
+    welcome_back
+---
+mandatory: True
+field: intro_screen
+section: Introduction
+question: Welcome to the Discrimination Claims Navigator!
+subquestion: |
+  We want to help you understand if you have a claim for discrimination. 
+  
+  To do so, we take you through a set of questions to understand which areas of the law apply. We then provide an analysis of your claim or claims based on your responses.
+
+  ${ disclaimer }
+  
+  If you want more information on a question, press **Help**. To get started, press **Continue**.
+help:
+  label: Help
+  heading: 
+  content: |
+    **Claims under state or local law.** Many state and local governments have their own anti-discrimination laws, and these laws may offer extra protection beyond the federal laws.
+    
+    Some state laws:
+    
+    * Apply to businesses with only five or six employees 
+    * Prohibit discrimination based on whether you're married or have children
+    * Have different deadlines for filing a charge 
+    * Have different standards for deciding whether you’re covered by them
+    
+    If you think you may have a claim under the laws of your state or local government, we suggest you contact qualified counsel. The Discrimination Claims Navigator only covers US federal law.
+    
+    **About the Navigation Bar.** If you are not on a smartphone-sized device, you should see a navigation bar to the left of your screen. The navigation bar shows you which law we're discussing.
+---
+mandatory: True
+code: |
+  questions.new('employer_religious', 'ministerial_job', 'employer_more_than_15', 'Title_VII_applies', 'discrimination_based_on_employer_policy', 'direct_evidence_of_discriminatory_intent', 'Price_Waterhouse_claim', 'McDonnell_Douglas_prima_facie_case', 'McDonnell_Douglas_burden_shifting', 'disparate_impact', 'business_necessity', 'alternative_employment_practice', 'hostile_work_environment', 'conduct_or_comments', 'conduct_or_comments_unwelcome', 'conduct_or_comments_abusive_or_pervasive', 'threats_carried_out', 'disability', 'disability_no_accommodation_required', 'disability_no_defense', 'disability_reasonable_accommodation', 'disability_undue_hardship', 'no_accommodation', 'unequal_pay', 'age', 'employer_more_than_20', 'age_disparate_treatment', 'opposed_employment_practice', 'age_retaliation', 'genetic_information', 'genetic_information_applicant_not_hired', 'genetic_information_caused_not_hiring', 'genetic_information_disparate_treatment', 'genetic_information_disparate_treatment_employment_effect', 'genetic_information_disparate_treatment_cause_is_discrimination', 'genetic_information_request', 'genetic_information_mistaken_request', 'genetic_information_health_request', 'genetic_information_health_request_consent', 'genetic_information_health_request_medical_professional_exemption', 'genetic_information_health_request_not_disclosed_to_employer', 'genetic_information_publicly_available', 'genetic_information_discriminatory_comp_practice', 'genetic_information_no_promotion', 'genetic_information_no_training', 'genetic_information_benefits_denial', 'genetic_information_termination', 'genetic_information_forced_to_quit')
+  questions['employer_religious'].question = "Free exercise of religion"
+  questions['employer_religious'].subquestion = "First, we need to understand if your employer benefits from special protections for religion. Is your employer or potential employer a church or religious institution?"
+  questions['ministerial_job'].question = "Free exercise of religion, continued"
+  questions['ministerial_job'].subquestion = "Are you applying to be a minister, a priest or a role that performs the functions of a minister or priest?"
+  questions['employer_more_than_15'].question = "Civil Rights Act: Coverage"
+  questions['employer_more_than_15'].subquestion = "Now, we will ask you questions about the Civil Rights Act of 1964, which prohibits discrimination in many circumstances. Does your employer or potential employer have 15 or more employees?"
+  questions['Title_VII_applies'].question = "Civil Rights Act: Protected traits"
+  questions['Title_VII_applies'].subquestion = "Is your discrimination claim based on: race, color, sex (including pregnancy, childbirth and related conditions), religion or national origin?"
+  questions['discrimination_based_on_employer_policy'].question = "Civil Rights Act: Disparate Treatment/Impact"
+  questions['discrimination_based_on_employer_policy'].subquestion = "Is the discrimination based on an employer's policy?"
+  questions['direct_evidence_of_discriminatory_intent'].question = "Civil Rights Act: Disparate Treatment"
+  questions['direct_evidence_of_discriminatory_intent'].subquestion = "Is there direct evidence of discriminatory intent?"
+  questions['Price_Waterhouse_claim'].question = "Civil Rights Act: Disparate Treatment"
+  questions['Price_Waterhouse_claim'].subquestion = "This next question goes to a situation where your employer or potential employer may have had mixed motives. You do not need to know that your protected trait was the only motivating factor at the time of your employer or potential employer's decision, only that it actually played a part in the decision. Did your protected trait actually motivate your employer or potential employer's decision?"
+  questions['McDonnell_Douglas_prima_facie_case'].question = "Civil Rights Act: Disparate Treatment"
+  questions['McDonnell_Douglas_prima_facie_case'].subquestion = "Do you have facts adequate to support the following statements: [1] Do you belong to a racial minority or other protected trait? [2] Did you apply and were qualified for a job for which the employer was seeking applicants? [3] Despite your qualifications, were you rejected? [4] After your rejection, did the position remain open and the employer continued to seek applications from others that had your qualifications?"
+  questions['McDonnell_Douglas_burden_shifting'].question = "Civil Rights Act: Disparate Treatment"
+  questions['McDonnell_Douglas_burden_shifting'].subquestion = "If your potential employer can articulate a legitimate, nondiscriminatory reason for your rejection, can you show that your potential employer's reason is merely a pretext for behavior actually motivated by discrimination?"
+  questions['disparate_impact'].question = "Civil Rights Act: Disparate Impact"
+  questions['disparate_impact'].subquestion = "Does your employer's or potential employer's policy have a disparate impact on you because of your protected trait?"
+  questions['business_necessity'].question = "Civil Rights Act: Disparate Impact"
+  questions['business_necessity'].subquestion = "Can your employer or potential employer show that the employment practice is necessary for the business?"
+  questions['alternative_employment_practice'].question = "Civil Rights Act: Disparate Impact"
+  questions['alternative_employment_practice'].subquestion = "Can you show an alternative employment practice that serves the employer's interest and that the employer has refused to adopt?"
+  questions['hostile_work_environment'].question = "Civil Rights Act: Hostile Work Environment"
+  questions['hostile_work_environment'].subquestion = "Is your claim for discrimination based on a hostile work environment?"
+  questions['conduct_or_comments'].question = "Civil Rights Act: Hostile Work Environment"
+  questions['conduct_or_comments'].subquestion = "Have there been: sexual conduct or comments about sexual activity, or conduct or comments relating to your gender or sexual orientation?"
+  questions['conduct_or_comments_unwelcome'].question = "Civil Rights Act: Hostile Work Environment"
+  questions['conduct_or_comments_unwelcome'].subquestion = "Were the comments or conduct unwelcome?"
+  questions['conduct_or_comments_abusive_or_pervasive'].question = "Civil Rights Act: Hostile Work Environment"
+  questions['conduct_or_comments_abusive_or_pervasive'].subquestion = "Were the comments or conduct abusive or pervasive?"
+  questions['threats_carried_out'].question = "Civil Rights Act: Hostile Work Environment"
+  questions['threats_carried_out'].subquestion = "Have there been threats against you at work and were they carried out? For instance, were your terms of employment altered?"
+  questions['disability'].question = "Disabilities Act"
+  questions['disability'].subquestion = "Now we will ask you questions about the Americans with Disabilities Act of 1990, which prohibits discrimination because of disabilities in many circumstances. Is your claim of discrimination in respect of a disability?"
+  questions['disability_no_accommodation_required'].question = "Disabilities Act, continued"
+  questions['disability_no_accommodation_required'].subquestion = "Can you perform the functions of your job without any kind of accommodation by your employer?"
+  questions['disability_no_defense'].question = "Disabilities Act, continued"
+  questions['disability_no_defense'].subquestion = "Did your employer discriminate against you on the basis of your disability and have no defenses?"
+  questions['disability_reasonable_accommodation'].question = "Disabilities Act, continued"
+  questions['disability_reasonable_accommodation'].subquestion = "Can you perform the essential functions of your job or potential job with reasonable accommodation by your employer?"
+  questions['disability_undue_hardship'].question = "Disabilities Act, continued"
+  questions['disability_undue_hardship'].subquestion = "Will the accommodation impose undue hardship on the operation of your employer or potential employer's business?"
+  questions['no_accommodation'].question = "Disabilities Act, continued"
+  questions['no_accommodation'].subquestion = "Did your employer provide the accommodation? For this question, the accommodation is the one that would be considered reasonable and would not impose undue hardship on the employer."
+  questions['unequal_pay'].question = "Equal Pay Act"
+  questions['unequal_pay'].subquestion = "Now we will ask you questions about the Equal Pay Act of 1963, which prohibits discrimination in compensation because of your sex. Is your claim based on unequal pay for equal work performed by the opposite sex?"
+  questions['age'].question = "Age Discrimination Act"
+  questions['age'].subquestion = "Now we will ask you questions about the Age Discrimination in Employment Act of 1967, which prohibits age discrimination in employment. Are you 40 years of age or older and is your claim in respect of discrimination on the basis of your age?"
+  questions['employer_more_than_20'].question = "Age Discrimination Act, continued"
+  questions['employer_more_than_20'].subquestion = "Does your employer or potential employer have 20 or more employees?"
+  questions['age_disparate_treatment'].question = "Age Discrimination Act, continued"
+  questions['age_disparate_treatment'].subquestion = "Were you fired on the basis of your age or the status of your pension?"
+  questions['opposed_employment_practice'].question = "Age Discrimination Act, continued"
+  questions['opposed_employment_practice'].subquestion = "Can you answer either of the two questions below affirmatively?  [A] Were you opposed to an employment practice of your employer? [B] Have you participated in any proceedings or in filing charges against your employer on the basis of your employer's employment practice?"
+  questions['age_retaliation'].question = "Age Discrimination Act, continued"
+  questions['age_retaliation'].subquestion = "Can you meet all of the requirements below? [A] Did you have a reasonable, good faith belief that the employment practice was unlawful? [B] Did you engage in statutorily protected expression? [C] Did you suffer an adverse employment action (hiring, firing or demotion)? [D] Is there any connection between the employee's statutorily protected expression and the adverse employee action? "
+  questions['genetic_information'].question = "Genetic Information Nondiscrimination Act"
+  questions['genetic_information'].subquestion = "Now we will ask you questions about the Genetic Information Nondiscrimination Act of 2008, which prohibits discrimination on the basis of genetic information in many circumstances. Were you discriminated against on the basis of genetic information?"
+  questions['genetic_information_applicant_not_hired'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_applicant_not_hired'].subquestion = "Did you apply for a job and the employer failed or refused to hire you for that specific job?"
+  questions['genetic_information_caused_not_hiring'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_caused_not_hiring'].subquestion = "Was the employer's failure or refusal to hire you because of your genetic information?"
+  questions['genetic_information_disparate_treatment'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_disparate_treatment'].subquestion = "Has your employer made any classification, segregation or limitation of its employees?"
+  questions['genetic_information_disparate_treatment_employment_effect'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_disparate_treatment_employment_effect'].subquestion = "Does the classification, segregation or limitation made by your employer adversely affect or tend to adversely affect: your status as an employee, or your employment opportunities?"
+  questions['genetic_information_disparate_treatment_cause_is_discrimination'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_disparate_treatment_cause_is_discrimination'].subquestion = "Did your employer make the classification, segregation or limitation because of your genetic information?"
+  questions['genetic_information_request'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_request'].subquestion = "Has you employer requested, required or purchased your or any of your family member's genetic information?"
+  questions['genetic_information_mistaken_request'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_mistaken_request'].subquestion = "Was your employer's request or requirement made by mistake?"
+  questions['genetic_information_health_request'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_health_request'].subquestion = "Does your employer offer health or genetic services whether or not as part of a wellness program?"
+  questions['genetic_information_health_request_consent'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_health_request_consent'].subquestion = "Have you given prior, knowing, voluntary and written authorization for the genetic service?"
+  questions['genetic_information_health_request_medical_professional_exemption'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_health_request_medical_professional_exemption'].subquestion = "Will it be only you (or your family member if the family member is receiving genetic services) and the licensed health care professional or board certified genetic counselor involved in providing such services who will receive individually identifiable information concerning the results of such services?"
+  questions['genetic_information_health_request_not_disclosed_to_employer'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_health_request_not_disclosed_to_employer'].subquestion = "Will the genetic information not be disclosed to your employer?"
+  questions['genetic_information_publicly_available'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_publicly_available'].subquestion = "Has your employer purchased documents that include your medical history which are publicly available? Publicly available records include newspapers, magazines, periodicals, and books, but do not include medical databases or court records."
+  questions['genetic_information_discriminatory_comp_practice'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_discriminatory_comp_practice'].subquestion = "Did your employer use your or any of your family member's genetic information to treat you differently in terms of compensation, terms, conditions or privileges of employment?"
+  questions['genetic_information_no_promotion'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_no_promotion'].subquestion = "Has your employer refused to promote you or denied you a promotion based on your or your family's genetic information?"
+  questions['genetic_information_no_training'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_no_training'].subquestion = "Did your employer refuse to select you for a training program and was your employer's refusal to select you for a training program based on your or any of your family member's genetic information?"
+  questions['genetic_information_benefits_denial'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_benefits_denial'].subquestion = "Has your employer denied you benefits because of your or any of your family member's genetic information?"
+  questions['genetic_information_termination'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_termination'].subquestion = "Have you been fired or discharged from employment because of your or any of your family member's genetic information?"
+  questions['genetic_information_forced_to_quit'].question = "Genetic Information Nondiscrimination Act, continued"
+  questions['genetic_information_forced_to_quit'].subquestion = "Have you been forced to quit by your employer because of your or any of your family member's genetic information?"
+  content.new('ministerial_exception', 'ministerial_exception_uncertain', 'strong_claim_based_on_direct_evidence_of_discriminatory_intent', 'valid_Price_Waterhouse_claim', 'valid_McDonnell_Douglas_claim', 'business_necessity_defense', 'valid_disparate_impact_claim', 'discrimination_based_on_employer_policy', 'disputed_disparate_impact_claim', 'hostile_work_environment_claim', 'hostile_work_environment_claim_with_retaliation', 'Disabilities_Act_claim', 'Disabilities_Act_claim_reasonable_accommodation', 'undue_hardship_or_no_reasonable_accommodation', 'equal_pay_claim', 'age_claim', 'genetic_information_applicant_claim', 'genetic_information_disparate_treatment_claim', 'genetic_information_mistaken_request_defense', 'genetic_information_health_request_consent_defense', 'genetic_information_health_request_medical_professional_exemption_defense', 'genetic_information_health_request_not_disclosed_to_employer_defense', 'genetic_information_publicly_available_defense', 'genetic_information_discriminatory_comp_practice_claim', 'genetic_information_no_promotion_claim', 'genetic_information_no_training_claim', 'genetic_information_benefits_denial_claim', 'genetic_information_termination_claim', 'genetic_information_forced_to_quit_claim')
+  content['ministerial_exception'].dial = 0.1
+  content['ministerial_exception'].question = "<strong>The Ministerial Exception</strong>"
+  content['ministerial_exception'].title = "The Ministerial Exception"
+  content['ministerial_exception'].subquestion = "<p>Because special protections apply under the <em>free exercise of religion</em> clause of the U.S. Constitution, your chance for a successful discrimination claim is <strong>low</strong>. Your employer or potential employer is protected by the ministerial exception to anti-discrimination laws. The ministerial exception, sometimes known as the \"ecclesiastical exception,\" is a legal doctrine in the United States barring the application of anti-discrimination laws to religious institutions' employment relationships with its \"ministers.\" As explained by the Supreme Court in the landmark case <em>Hosanna-Tabor Evangelical Lutheran Church and School v. E.E.O.C.</em> , the exception is drawn from the First Amendment to the United States Constitution, and seeks to both (1) safeguard religious groups' \"freedom . . . to select their own ministers,\" a principle rooted in the Free Exercise Clause, and (2) prevent \"government involvement in ecclesiastical decisions,\" a prohibition stemming from the Establishment Clause. When applied, the exception operates to give religious institutions an affirmative defense when sued for discrimination by employees who qualify as \"ministers;\" for example, female priests cannot sue the Catholic church to force their hiring. However, exactly which types of employees should qualify as a \"ministers,\" and thus how broadly the exception should apply, is the subject of current litigation before the Supreme Court.</p><h6><center><strong>What's next?</strong></center></h6><p>We have taken you through an interview that provides an analysis of claims under federal law, but you may have claims under state or local law. You will want to decide if you want to move forward with your claims. If you want to move forward, we suggest you consult with a lawyer. A lawyer can help you with an analysis of state and local law, and help you with several issues that are beyond the scope of this navigator, including:<li>comparing your facts and circumstances to others in a similar situation;</li><li>understanding how you would do in the court or administrative agency that would hear your claim(s);</li><li>estimating the value of your claim(s);<li>estimating how much it would cost to pursue your claim(s); and</li><li>negotiating with your employer or filing your claim(s).</li></p><h6><center><strong>Lawyer referral</strong></center></h6><p>We can refer you to a lawyer at no charge. To request a referral, click <strong>Lawyer referral</strong> below. We usually respond within 24 hours.</p>"
+  content['ministerial_exception_uncertain'].dial = 0.4
+  content['ministerial_exception_uncertain'].question = "Your employer may claim that you are applying for a role that performs the function of a minister or priest. Your employer may be eligible for special protection under the <em>free exercise of religion</em> clause of the U.S. Constitution, and we suggest that you consult qualified legal counsel in your jurisdiction."
+  content['ministerial_exception_uncertain'].title = "Your employer may claim that you are applying for a role that performs the function of a minister or priest. Your employer may be eligible for special protection under the free exercise of religion clause of the U.S. Constitution, and we suggest that you consult qualified legal counsel in your jurisdiction."
+  content['ministerial_exception_uncertain'].subquestion = "If you are not sure if the job you are applying for is a role that performs the function of a minister or priest, you may fall in an area of the law that has not been defined by the US Supreme Court. In some jurisdictions, the courts have considered teachers that work for religious institutions as performing enough of the role of a minister or priest that the religious institution should receive the protection of the free exercise of religion clause in hiring for that role. Other jurisdictions have proceeded differently or have not addressed the issue. If you would like to consider your discrimination claim further, we suggest that you consult qualified legal counsel in your jurisdiction."
+  
+  content['strong_claim_based_on_direct_evidence_of_discriminatory_intent'].dial = 0.9
+  content['strong_claim_based_on_direct_evidence_of_discriminatory_intent'].question = "Civil Rights Act:<br>Direct Evidence of Discriminatory Intent"
+  content['strong_claim_based_on_direct_evidence_of_discriminatory_intent'].title = "Civil Rights Act:\nDirect Evidence of Discriminatory Intent"
+  content['strong_claim_based_on_direct_evidence_of_discriminatory_intent'].subquestion = "<p>Based on your responses, your chance for a successful discrimination claim under Title VII of the Civil Rights Act of 1964 is <strong>good</strong>.</p><p><strong>Background.</strong> Based on your response that there is direct evidence of discriminatory intent from your employer or potential employer, you have a strong claim for discrimination under Title VII of the Civil Rights Act of 1964. Direct evidence of discriminatory intent is one of the strongest grounds for a discrimination claim. The strength of your evidence of discriminatory intent will likely be an important part of your claim.</p>"
+  content['valid_Price_Waterhouse_claim'].dial = 0.7
+  content['valid_Price_Waterhouse_claim'].question = "Civil Rights Act:<br>Price Waterhouse Claim"
+  content['valid_Price_Waterhouse_claim'].title = "Civil Rights Act:\nPrice Waterhouse Claim"
+  content['valid_Price_Waterhouse_claim'].subquestion = "<p>Based on your responses, you have a valid claim under the Civil Rights Act of 1964 under a line of case law for a claim that is often referred to as a <strong>Price Waterhouse Claim</strong>.</p><p><strong>Background.</strong> Based on your response that your protected trait actually motivated your employer's decision, you have a valid claim for discrimination. This type of claim may not be as easy to win as a claim where you can show direct evidence of discriminatory intent, which is often more clear cut. With a Price Waterhouse Claim, you are required to show that a preponderance of evidence indicates that intentional discrimination was a motivating factor at the time of your employer or potential employer's decision, even it if was mixed with other motives.</p>"
+  content['valid_McDonnell_Douglas_claim'].dial = 0.6
+  content['valid_McDonnell_Douglas_claim'].question = "Civil Rights Act:<br>McDonnell Douglas Claim"
+  content['valid_McDonnell_Douglas_claim'].title = "Civil Rights Act:\nMcDonnell Douglas Claim"
+  content['valid_McDonnell_Douglas_claim'].subquestion = "<p>Based on your responses, you have a valid claim under the Civil Rights Act of 1964 under a line of case law for a claim that is often referred to as a <strong>McDonnell Douglas Claim</strong>.</p><p><strong>Background.</strong> Your responses indicated that you do not have direct evidence of discriminatory intent. As a result, your employer or potential employer would likely ask a court to dismiss your claim for lack of evidence. To give you a chance to make your case without direct evidence of discriminatory intent, a court in a McDonnell Douglas Claim shifts the burden of persuasion to you. To meet the burden of persuasion, you will have to provide facts that show \"by a preponderance of the evidence\" that your claim is true.</p><p>As an example for a rejected applicant for a job, the court would implement the burden of persuasion by following these steps:</p><ol><li>You would need to make a <i>prima facie</i> case, meaning that you would need to show that <ul><li>you are a member of a protected class,</li><li>you were qualified for and applied for an available position,</li><li>despite being qualified, you were rejected for that position, and</li><li>the position remained available after your rejection, and your employer or potential employer continued to seek applicants with your qualifications.</li></ul><li>Your employer or potential employer would then be required to articulate a legitimate, non-discriminatory reason for your rejection.</li><li>You would then need to demonstrate that your employer or potential employer's reason was a pretext for discrimination.</li></ol><p></p><p>That framework has been used in different situations by different courts, and even extended to other claims of discrimination under different laws, like the Disabilities Act and the Age Discrimination Act. A McDonnell Douglas Claim is a harder claim to prove than a claim that includes direct evidence of discriminatory intent."
+  content['business_necessity_defense'].dial = 0.2
+  content['business_necessity_defense'].question = "Civil Rights Act:<br>Disparate Impact Claim with Business Necessity Defense"
+  content['business_necessity_defense'].title = "Civil Rights Act:\nDisparate Impact Claim with Business Necessity Defense"
+  content['business_necessity_defense'].subquestion = "<p>Based on your responses, you have a claim that your employer's policy had a disparate impact on persons with your protected trait, but your employer has a defense to that claim on the basis that the practice is necessary for the business.</p><p>To show that the employment practice is necessary to the business, your employer or potential employer will need to show that:<ol><li>the employment practice relates to the performance of the job, and</li><li>the employment practice relates to the job you are applying for.</li></ol></p><p>If would like to reconsider your answers in the interview, press **Back** in the header above."
+  content['valid_disparate_impact_claim'].dial = 0.7
+  content['valid_disparate_impact_claim'].question = "Civil Rights Act:<br>Disparate Impact Claim"
+  content['valid_disparate_impact_claim'].title = "Civil Rights Act:\nDisparate Impact Claim"
+  content['valid_disparate_impact_claim'].subquestion = "<p>Your claim is that the employment practice your employer or potential employer used was discriminatory under the disparate impact theory of Title VII of the Civil Rights Act of 1964. You've indicated that your employer is not likely to prove that its employment practice is necessary for the business, and that alternative methods are available. Based on your responses, your claim is relatively strong.</p><p>In these situations, there is often a dispute over whether the employment practice is necessary for the  business. You can expect your employer or potential employer to claim that the practice was necessary for the business, and the strength of your claim will be in showing that there is an alternative employment practice that does not have the discriminatory effect, serves the employer's interest, and that the employer refused to adopt that alternative employment practice.</p>"
+  content['discrimination_based_on_employer_policy'].dial = 0.6
+  content['discrimination_based_on_employer_policy'].question = "Civil Rights Act:<br>Disparate Treatment/Impact"
+  content['discrimination_based_on_employer_policy'].title = "Civil Rights Act:\nDisparate Treatment/Impact"
+  content['discrimination_based_on_employer_policy'].subquestion = "Is the discrimination based on an employer's policy?"
+  content['disputed_disparate_impact_claim'].dial = 0.5
+  content['disputed_disparate_impact_claim'].question = "Civil Rights Act:<br>Disparate Impact Claim with Business Necessity Defense and Alternative Employment Practice"
+  content['disputed_disparate_impact_claim'].title = "Civil Rights Act:\nDisparate Impact Claim with Business Necessity Defense and Alternative Employment Practice"
+  content['disputed_disparate_impact_claim'].subquestion = "<p>Based on your responses, your employer or potential employer may claim that the discriminatory practice was necessary for business, and you can show that there was an alternative employment practice that serves your employer’s interest and that your employer has refused to adopt. Your Disparate Impact Claim will be disputed, but you do have a valid response to your employer or potential employer's Business Necessity Defense.</p><p><strong>Background.</strong> Your claim is based on the employment practice having a disparate impact on your group protected by Title VII of the Civil Rights Act of 1964. Your employer or potential employer will likely claim that the employment practice was necessary for business (the \"Business Necessity Defense\"), and you will need to show that there is an alternative employment practice that does not have the discriminatory effect, serves the employer's interest, and that the employer refused to adopt that alternative employment practice.</p>"
+  content['hostile_work_environment_claim'].dial = 0.7
+  content['hostile_work_environment_claim'].question = "Civil Rights Act:<br>Hostile Work Environment Claim"
+  content['hostile_work_environment_claim'].title = "Civil Rights Act:\nHostile Work Environment Claim"
+  content['hostile_work_environment_claim'].subquestion = "<p>Your claim is that your employer created or allowed for a hostile work environment. A Hostile Work Environment Claim is a claim under Title VII of the Civil Rights Act of 1964.</p><p>Your responses indicate that the conduct or comments that created a hostile work environment were unwelcome and abusive and pervasive. In situations like this, your employer will often argue that the conduct or comments were not unwelcome and that the hostility of the work environment could not be described as abusive and pervasive. To decide a case, a judge or jury will look at the evidence provided by both sides.</p>"
+  content['hostile_work_environment_claim_with_retaliation'].dial = 0.9
+  content['hostile_work_environment_claim_with_retaliation'].question = "Civil Rights Act:<br>Hostile Work Environment Claim with Retaliation"
+  content['hostile_work_environment_claim_with_retaliation'].title = "Civil Rights Act:\nHostile Work Environment Claim with Retaliation"
+  content['hostile_work_environment_claim_with_retaliation'].subquestion = "<p>Your claim is that your employer created or allowed for a hostile work environment and that there were threats against you that were carried out (<strong><i>Retaliation</i></strong>). A Hostile Work Environment Claim is a claim under Title VII of the Civil Rights Act of 1964.</p><p>Your responses indicate that the conduct or comments that created a hostile work environment were unwelcome and abusive and pervasive. In situations like this, your employer will often argue that the conduct or comments were not unwelcome and that the hostility of the work environment could not be described as abusive and pervasive. In your case, you have also indicated that there were was Retaliation, which makes your claim stronger than a Hostile Work Environment Claim without Retaliation.</p>"
+  content['Disabilities_Act_claim'].dial = 0.9
+  content['Disabilities_Act_claim'].question = "Disabilities Act:<br>Disabilities Act Claim with No Defenses"
+  content['Disabilities_Act_claim'].title = "Disabilities Act:\nDisabilities Act Claim with No Defenses"
+  content['Disabilities_Act_claim'].subquestion = "Based on your responses, your claim is that you can perform the functions of your job without any kind of accommodation by your employer and your employer discriminated against you with no defenses. As a result, you have a valid claim for discrimination under the Disabilities Act of 1990. Since you can perform the functions of your job without any kind of accommodation by your employer, and your employer disciminated against you with no other defenses, you have a relatively strong claim."
+  content['Disabilities_Act_claim_reasonable_accommodation'].dial = 0.7
+  content['Disabilities_Act_claim_reasonable_accommodation'].question = "Disabilities Act:<br>Disabilities Act Claim with Reasonable Accomodation"
+  content['Disabilities_Act_claim_reasonable_accommodation'].title = "Disabilities Act:\nDisabilities Act Claim with Reasonable Accomodation"
+  content['Disabilities_Act_claim_reasonable_accommodation'].subquestion = "Based on your responses, your claim is that you can perform the essential functions of your job if your employer or potential employer reasonably accomodated your disability. Your responses indicated that the reasonable accommodation would not impose undue hardship on the operation of the employer's business, so you have a valid claim under the Disabilities Act."
+  content['undue_hardship_or_no_reasonable_accommodation'].dial = 0.1
+  content['undue_hardship_or_no_reasonable_accommodation'].question = "Disabilities Act:<br>Undue Hardship or No Reasonable Accomodation"
+  content['undue_hardship_or_no_reasonable_accommodation'].title = "Disabilities Act:\nUndue Hardship or No Reasonable Accomodation"
+  content['undue_hardship_or_no_reasonable_accommodation'].subquestion = "Your responses indicate that you could not perform essential functions of the job with reasonable accommodation or that the accommodation would impose undue hardship on the operation of the employer's business. As a result, your claim is not likely to be successful under the Americans with Disabilities Act of 1990. If you would like to reconsider your answers, click **Back** in the header above and you can return to the questions under the Disabilities Act."
+  content['equal_pay_claim'].dial = 0.9
+  content['equal_pay_claim'].question = "Equal Pay Act:<br>Equal Pay Claim"
+  content['equal_pay_claim'].title = "Equal Pay Act:\nEqual Pay Claim"
+  content['equal_pay_claim'].subquestion = "Based on your answers, you have a claim under the Equal Pay Act of 1963 because you have not been paid equally for equal work. In these situations, the cases often revolve around the description of the situation, with employers claiming that the work was not in fact equal and therefore differences in pay were justified."
+  content['age_claim'].dial = 0.9
+  content['age_claim'].question = "Age Discrimination Act:<br>Age Claim"
+  content['age_claim'].title = "Age Discrimination Act:\nAge Claim"
+  content['age_claim'].subquestion = "Your responses indicate that you have a valid claim under the Age Discrimination in Employment Act of 1963. Your responses indicate that your employer has more than 20 employees (which is required for the application of this law), you were treated differently because of your age, you opposed the employment practice of your employer and were retaliated against. If the court agrees with your view of the facts and circumstances, then you have a good case for discrimination under the Age Discrimination in Employment Act of 1963. Cases like this one are often decided based on arguments over the facts and circumstances, and in a court a judge or jury would decide those facts and circumstances."
+  content['genetic_information_applicant_claim'].dial = 0.8
+  content['genetic_information_applicant_claim'].question = "Genetic Information Nondiscrimination Act:<br>Genetic Information Applicant Claim"
+  content['genetic_information_applicant_claim'].title = "Genetic Information Nondiscrimination Act:\nGenetic Information Applicant Claim"
+  content['genetic_information_applicant_claim'].subquestion = "<p>Your responses indicate that you have a valid claim under the Genetic Information Nondiscrimination Act of 2008. You stated that:</p><ul><li>you were discriminated against on the basis of your genetic information,</li><li>you weren't hired because of your genetic information, and</li><li>your genetic information caused your failure to be hired.</li></ul><p>Based on your responses, you have a good claim for discrimination based on genetic information as an applicant for a job.</p>"
+  content['genetic_information_disparate_treatment_claim'].dial = 0.8
+  content['genetic_information_disparate_treatment_claim'].question = "Genetic Information Nondiscrimination Act:<br>Disparate Treatment Claim"
+  content['genetic_information_disparate_treatment_claim'].title = "Genetic Information Nondiscrimination Act:\nDisparate Treatment Claim"
+  content['genetic_information_disparate_treatment_claim'].subquestion = "<p>Your responses indicate that you have a valid claim under the Genetic Information Nondiscrimination Act of 2008. You stated that:</p><ul><li>you were discriminated against on the basis of your genetic information,</li><li>your employer classified, segregated or limited its employees on the basis of genetic information,</li><li>that classification, segregation or limitation adversely affected your employment status or your employment opportunities, and</li><li>your employer made that classification, segregation or limitation because of your genetic information.</li></ul><p>Based on your responses, you have a good claim for discrimination based on genetic information.</p>"
+  content['genetic_information_mistaken_request_defense'].dial = 0.2
+  content['genetic_information_mistaken_request_defense'].question = "Genetic Information Nondiscrimination Act:<br>Mistaken Request Defense"
+  content['genetic_information_mistaken_request_defense'].title = "Genetic Information Nondiscrimination Act:\nMistaken Request Defense"
+  content['genetic_information_mistaken_request_defense'].subquestion = "Based on your responses, you do not have a claim for discrimination under the Genetic Information Nondiscrimination Act of 2008. If your employer requested, required or purchased you or your family member's genetic information by mistake and can show that is the case, your employer has a valid defense to your discrimination claim."
+  content['genetic_information_health_request_consent_defense'].dial = 0.1
+  content['genetic_information_health_request_consent_defense'].question = "Genetic Information Nondiscrimination Act:<br>Explicit Consent Defense"
+  content['genetic_information_health_request_consent_defense'].title = "Genetic Information Nondiscrimination Act:\nExplicit Consent Defense"
+  content['genetic_information_health_request_consent_defense'].subquestion = "Based on your responses, you do not have a claim for discrimination under the Genetic Information Nondiscrimination Act of 2008. Because you gave prior, knowing, voluntary and written consent to the transfer of genetic information, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_health_request_medical_professional_exemption_defense'].dial = 0.1
+  content['genetic_information_health_request_medical_professional_exemption_defense'].question = "Genetic Information Nondiscrimination Act:<br>Medical Professional Exemption"
+  content['genetic_information_health_request_medical_professional_exemption_defense'].title = "Genetic Information Nondiscrimination Act:\nMedical Professional Exemption"
+  content['genetic_information_health_request_medical_professional_exemption_defense'].subquestion = "Based on your responses, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008. Because the genetic information is being shared for health reasons and the only person receiving the information is appropriately licensed as a medical professional, your employer has a valid defense to your claim."
+  content['genetic_information_health_request_not_disclosed_to_employer_defense'].dial = 0.1
+  content['genetic_information_health_request_not_disclosed_to_employer_defense'].question = "Genetic Information Nondiscrimination Act:<br>No Disclosure to Employer"
+  content['genetic_information_health_request_not_disclosed_to_employer_defense'].title = "Genetic Information Nondiscrimination Act:\nNo Disclosure to Employer"
+  content['genetic_information_health_request_not_disclosed_to_employer_defense'].subquestion = "Based on your responses, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008. Because the genetic information was not disclosed to your employer and the request was for medical reasons, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_publicly_available_defense'].dial = 0.1
+  content['genetic_information_publicly_available_defense'].question = "Genetic Information Nondiscrimination Act:<br>Publicly Available Information"
+  content['genetic_information_publicly_available_defense'].title = "Genetic Information Nondiscrimination Act:\nPublicly Available Information"
+  content['genetic_information_publicly_available_defense'].subquestion = "Based on your responses, you do not have a good claim under the Genetic Information Nondiscrimination Act of 2008. Since you stated that the genetic information purchased by your employer was publicly available, the chance of a successful discrimination claim is low."
+  content['genetic_information_discriminatory_comp_practice_claim'].dial = 0.8
+  content['genetic_information_discriminatory_comp_practice_claim'].question = "Genetic Information Nondiscrimination Act:<br>Discriminatory Compensation Claim"
+  content['genetic_information_discriminatory_comp_practice_claim'].title = "Genetic Information Nondiscrimination Act:\nDiscriminatory Compensation Claim"
+  content['genetic_information_discriminatory_comp_practice_claim'].subquestion = "Based on your responses, you have a claim for discrimination under the Genetic Information Nondiscrimination Act of 2008. You stated that your genetic information was the cause of a discriminatory employment compensation practice, which is grounds for a discrimination claim."
+  content['genetic_information_no_promotion_claim'].dial = 0.8
+  content['genetic_information_no_promotion_claim'].question = "Genetic Information Nondiscrimination Act:<br>Denial of Promotion Claim"
+  content['genetic_information_no_promotion_claim'].title = "Genetic Information Nondiscrimination Act:\nDenial of Promotion Claim"
+  content['genetic_information_no_promotion_claim'].subquestion = "Based on your responses, you have a claim under the Genetic Information Nondiscrimination Act of 2008. You stated that your employer's refusal to promote you or denial of a promotion was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_no_training_claim'].dial = 0.8
+  content['genetic_information_no_training_claim'].question = "Genetic Information Nondiscrimination Act:<br>Denial of Training Claim"
+  content['genetic_information_no_training_claim'].title = "Genetic Information Nondiscrimination Act:\nDenial of Training Claim"
+  content['genetic_information_no_training_claim'].subquestion = "Based on your responses, you have a claim under the Genetic Information Nondiscrimination Act of 2008. You stated that your employer's refusal to select you for a training program was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_benefits_denial_claim'].dial = 0.8
+  content['genetic_information_benefits_denial_claim'].question = "Genetic Information Nondiscrimination Act:<br>Denial of Benefits Claim"
+  content['genetic_information_benefits_denial_claim'].title = "Genetic Information Nondiscrimination Act:\nDenial of Benefits Claim"
+  content['genetic_information_benefits_denial_claim'].subquestion = "Based on your responses, you have a claim under the Genetic Information Nondiscrimination Act of 2008. You stated that your employer's denial of benefits was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_termination_claim'].dial = 0.8
+  content['genetic_information_termination_claim'].question = "Genetic Information Nondiscrimination Act:<br>Wrongful Dismissal"
+  content['genetic_information_termination_claim'].title = "Genetic Information Nondiscrimination Act:\nWrongful Dismissal"
+  content['genetic_information_termination_claim'].subquestion = "Based on your responses, you have a claim under the Genetic Information Nondiscrimination Act of 2008. You stated that your employer fired or discharged you from employment based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008."
+  content['genetic_information_forced_to_quit_claim'].dial = 0.8
+  content['genetic_information_forced_to_quit_claim'].question = "Genetic Information Nondiscrimination Act:<br>Forced to Quit"
+  content['genetic_information_forced_to_quit_claim'].title = "Genetic Information Nondiscrimination Act:\nForced to Quit"
+  content['genetic_information_forced_to_quit_claim'].subquestion = "Based on your responses, you have a claim under the Genetic Information Nondiscrimination Act of 2008. You stated that you have been forced to quit by your employer because of your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008."
+  claims.clear()
+  noclaims.clear()
+  noclaims.append('genetic_information_mistaken_request_defense')
+  noclaims.append('genetic_information_health_request_consent_defense')
+  noclaims.append('genetic_information_health_request_medical_professional_exemption_defense')
+  noclaims.append('genetic_information_health_request_not_disclosed_to_employer_defense')
+  noclaims.append('genetic_information_publicly_available_defense')
+  noclaims.append('undue_hardship_or_no_reasonable_accommodation')
+  valid_claim = False
+  if employer_religious == True and ministerial_job == True:
+    if defined('lawyer_referral') and value('lawyer_referral') == True:
+      lawyer_referral_mail
+    else:
+      ministerial_exception
+  if employer_religious == True and ministerial_job == None:
+    claims.append("ministerial_exception_uncertain")
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and direct_evidence_of_discriminatory_intent == True:
+    claims.append("strong_claim_based_on_direct_evidence_of_discriminatory_intent")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and Price_Waterhouse_claim == True:
+    claims.append("valid_Price_Waterhouse_claim")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and McDonnell_Douglas_prima_facie_case == True and McDonnell_Douglas_burden_shifting == True:
+    claims.append("valid_McDonnell_Douglas_claim")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and disparate_impact == True and business_necessity == True and alternative_employment_practice == False:
+    claims.append("business_necessity_defense")
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and disparate_impact == True and business_necessity == False and alternative_employment_practice == True:
+    claims.append("valid_disparate_impact_claim")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and discrimination_based_on_employer_policy == True and disparate_impact == True and business_necessity == True and alternative_employment_practice == True:
+    claims.append("disputed_disparate_impact_claim")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and hostile_work_environment == True and conduct_or_comments == True and conduct_or_comments_unwelcome == True and conduct_or_comments_abusive_or_pervasive == True and threats_carried_out == False:
+    claims.append("hostile_work_environment_claim")
+    valid_claim = True
+  if employer_more_than_15 == True and Title_VII_applies == True and hostile_work_environment == True and threats_carried_out == True:
+    claims.append("hostile_work_environment_claim_with_retaliation")
+    valid_claim = True
+  if disability == True and disability_no_accommodation_required == True and disability_no_defense == True:
+    claims.append("Disabilities_Act_claim")
+    valid_claim = True
+  if disability == True and disability_reasonable_accommodation == True and disability_undue_hardship == False and no_accommodation == False:
+    claims.append("Disabilities_Act_claim_reasonable_accommodation")
+    valid_claim = True
+  if disability == True and disability_reasonable_accommodation == False:
+    claims.append("undue_hardship_or_no_reasonable_accommodation")
+  if disability == True and disability_undue_hardship == True:
+    claims.append("undue_hardship_or_no_reasonable_accommodation")
+  if disability == True and no_accommodation == False:
+    claims.append("undue_hardship_or_no_reasonable_accommodation")
+  if unequal_pay == True:
+    claims.append("equal_pay_claim")
+    valid_claim = True
+  if age == True and employer_more_than_20 == True and age_disparate_treatment == True and opposed_employment_practice == True and age_retaliation == True:
+    claims.append("age_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_applicant_not_hired == True and genetic_information_caused_not_hiring == True:
+    claims.append("genetic_information_applicant_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_disparate_treatment == True and genetic_information_disparate_treatment_employment_effect == True and genetic_information_disparate_treatment_cause_is_discrimination == True:
+    claims.append("genetic_information_disparate_treatment_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_request == True and genetic_information_mistaken_request == True:
+    claims.append("genetic_information_mistaken_request_defense")
+  if genetic_information == True and genetic_information_request == True and genetic_information_mistaken_request == False and genetic_information_health_request == True and genetic_information_health_request_consent == True:
+    claims.append("genetic_information_health_request_consent_defense")
+  if genetic_information == True and genetic_information_request == True and genetic_information_mistaken_request == False and genetic_information_health_request == True and genetic_information_health_request_medical_professional_exemption == True:
+    claims.append("genetic_information_health_request_medical_professional_exemption_defense")
+  if genetic_information == True and genetic_information_request == True and genetic_information_mistaken_request == False and genetic_information_health_request == True and genetic_information_health_request_not_disclosed_to_employer == True:
+    claims.append("genetic_information_health_request_not_disclosed_to_employer_defense")
+  if genetic_information == True and genetic_information_request == True and genetic_information_mistaken_request == False and genetic_information_publicly_available == True:
+    claims.append("genetic_information_publicly_available_defense")
+  if genetic_information == True and genetic_information_discriminatory_comp_practice == True:
+    claims.append("genetic_information_discriminatory_comp_practice_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_no_promotion == True:
+    claims.append("genetic_information_no_promotion_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_no_training == True:
+    claims.append("genetic_information_no_training_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_benefits_denial == True:
+    claims.append("genetic_information_benefits_denial_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_termination == True:
+    claims.append("genetic_information_termination_claim")
+    valid_claim = True
+  if genetic_information == True and genetic_information_forced_to_quit == True:
+    claims.append("genetic_information_forced_to_quit_claim")
+    valid_claim = True
+  if valid_claim == True:
+    for nc in noclaims:
+      claims.remove(nc)
+  if defined('lawyer_referral') and value('lawyer_referral') == True:
+    lawyer_referral_mail
+  else:
+    summary
+---
+question: |
+  Free exercise of religion
+subquestion: |
+  First, we need to understand if your employer benefits from special protections for religion. 
+  
+  Is your employer or potential employer a church or religious institution?
+yesno: employer_religious
+help:
+  label: Help
+  heading: Why are churches and religious institutions special?
+  content: |
+    Churches and religious institutions enjoy special protection from claims of discrimination because of the *free exercise of religion* clause of the U.S. constitution. 
+    
+    Because of that special protection, neutral or generally applicable laws may be applied differently to churches and religious institutions.
+    
+    Religious institutions are not restricted to the institutions of traditional religions like Christianity, Islam, Hinduism or Buddhism, but are broadly defined to cover religious conduct undertaken by more than just individual adherents.
+progress: 1
+field: free_exercise_of_religion
+section: Free exercise of religion
+right: |
+  <br>
+    <img src="https://www.hklaw.com/-/media/images/global/hklogo_full.png" width="200">
+  <div id="comment-block" class="comment-block" data-question="Free exercise of religion" data-lawyer="Holland & Knight"></div>
+---
+question: |
+  Free exercise of religion, continued
+subquestion: |
+  Are you applying to be a minister, a priest or a role that performs the functions of a minister or priest?
+yesnomaybe: ministerial_job
+right: |
+    <br>
+    <img src="https://www.hklaw.com/-/media/images/global/hklogo_full.png" width="200">
+    <div id="comment-block" class="comment-block" data-question="Free exercise of religion, continued" data-lawyer="Holland & Knight"></div>
+help:
+  label: Help
+  heading: What is a "role that performs the functions of a priest"?
+  content: |
+    Exactly which types of employees should qualify as a "ministers" or "priests" is the subject of current litigation before the Supreme Court. In some jurisdictions, teachers at a religious school perform the functions of a minister or priest. In others, it is less clear. If you are in doubt on this issue, choose "I don't know."
+     
+    **About this answer.** Holland & Knight has provided this answer pro bono, in support of the work of PartnerVine Access to democratize access to legal services. More information on Holland & Knight's pro bono activities can be found [here].
+    
+     <center><img src="https://www.hklaw.com/-/media/images/global/hklogo_full.png" width="200"></center>
+    
+    
+progress: 5
+---
+question: |
+  The Ministerial Exception
+subquestion: |
+  <div class="gauge gauge--liveupdate" data-value="${ content['ministerial_exception'].dial }">
+      <div class="gauge__container">
+          <div class="gauge__background"></div>
+          <div class="gauge__center"></div>
+          <div class="gauge__data"></div>
+          <div class="gauge__needle"></div>
+      </div>
+      <div class="gauge__labels mdl-typography__headline">
+          <span class="gauge__label--low">Low</span>
+          <span class="gauge__label--spacer"></span>
+          <span class="gauge__label--high">High</span>
+      </div>
+  </div>
+  <div><p><h6><center><strong>Claims indicator</strong></center></h6></p></div>
+  
+  The indicator above reflects the value of your claim(s). Because special protections apply under the *free exercise of religion* clause of the U.S. Constitution, your chance for a successful discrimination claim is **low**.
+  
+  Your employer or potential employer is protected by the **ministerial exception** to anti-discrimination laws. The ministerial exception, sometimes known as the "ecclesiastical exception," is a legal doctrine in the United States barring the application of anti-discrimination laws to religious institutions' employment relationships with its "ministers." As explained by the Supreme Court in the landmark case *Hosanna-Tabor Evangelical Lutheran Church and School v. E.E.O.C.* , the exception is drawn from the First Amendment to the United States Constitution, and seeks to both (1) safeguard religious groups' "freedom . . . to select their own ministers," a principle rooted in the Free Exercise Clause, and (2) prevent "government involvement in ecclesiastical decisions," a prohibition stemming from the Establishment Clause. When applied, the exception operates to give religious institutions an affirmative defense when sued for discrimination by employees who qualify as "ministers;" for example, female priests cannot sue the Catholic church to force their hiring. However, exactly which types of employees should qualify as a "ministers," and thus how broadly the exception should apply, is the subject of current litigation before the Supreme Court. 
+  
+  The claims indicator above reflects your response that you applied to be a minister, a priest or a role that performs the functions of a minister or priest. If you would like to reconsider that answer, click **Back** in the header above and you will return to that question.
+  
+  <div align="center"><p><strong>What's next?</strong></p></div align="center">
+  
+  We have taken you through an interview that provides an analysis of claims under federal law. Since the Ministerial Exception is a matter of federal constitutional law, it is a binding precedent on state and local law. State and local law may interpret federal constitutional law differently, however. At this stage, you will want to decide if you want to move forward with your claim(s). If you want to move forward, we suggest you consult with a lawyer. A lawyer can help you with an analysis of state and local law, and help you with several issues that are beyond the scope of this navigator, including:
+  
+  * comparing your facts and circumstances to others in a similar situation;
+  * understanding how you would do in the court or administrative agency that would hear your claim(s);</li><li>estimating the value of your claim(s);   
+  * estimating how much it would cost to pursue your claim(s); and
+  * negotiating with your employer or filing your claim(s).
+  
+  <div align="center"><p><strong>Lawyer referral</strong></p></div align="center"> 
+  
+  We can refer you to a lawyer at no charge. To request a referral, click **Lawyer referral** below. We usually respond within 24 hours.
+  
+buttons:
+  - Exit: exit
+  - Restart: restart
+action buttons:
+  - label: Download or email
+    action: download_ministerial
+    color: info
+  - label: Lawyer referral
+    action: refer_lawyer
+    color: dark
+event: ministerial_exception
+progress: 100
+---
+question: |
+  Your employer may claim that you are applying for a role that performs the function of a minister or priest. Your employer may be eligible for **special protection under the *free exercise of religion* clause of the U.S. Constitution**, and we suggest that you consult qualified legal counsel in your jurisdiction.
+subquestion: |
+  <div class="gauge gauge--liveupdate" data-value="${ content['ministerial_exception_uncertain'].dial }">
+      <div class="gauge__container">
+          <div class="gauge__background"></div>
+          <div class="gauge__center"></div>
+          <div class="gauge__data"></div>
+          <div class="gauge__needle"></div>
+      </div>
+      <div class="gauge__labels mdl-typography__headline">
+          <span class="gauge__label--low">Low</span>
+          <span class="gauge__label--spacer"></span>
+          <span class="gauge__label--high">High</span>
+      </div>
+  </div>
+  If you are not sure if the job you are applying for is a role that performs the function of a minister or priest, you may fall in an area of the law that has not been defined by the US Supreme Court. In some jurisdictions, the courts have considered teachers that work for religious institutions as performing enough of the role of a minister or priest that the religious institution should receive the protection of the free exercise of religion clause in hiring for that role. Other jurisdictions have proceeded differently or have not addressed the issue. If you would like to consider your discrimination claim further, we suggest that you consult qualified legal counsel in your jurisdiction.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: ministerial_exception_uncertain
+---
+question: |
+  Civil Rights Act: Coverage
+subquestion: |  
+  Now, we will ask you questions about the Civil Rights Act of 1964, which prohibits discrimination in many circumstances. 
+  
+  Does your employer or potential employer have 15 or more employees?
+yesno: employer_more_than_15
+right: |
+    <br>
+    <img src="https://www.akingump.com/cached/40262/images/logo-black.svg" width="200">
+help:
+  label: Help
+  heading: About the small company exemption to Title VII
+  content: |
+    Title VII of the Civil Rights Act of 1964 ("**Title VII**") does not apply to companies with less than 15 employees. 
+    
+    If your employer or potential employer has less than 15 employees, you may be covered by state or local laws, some of which apply to companies with as few as five or six employees. If you think you may have a claim under state or local law, we recommend that you contact qualified counsel in your jurisdiction.
+    
+    **How do you count your employer's employees?**
+    
+    Here is some help for counting your employer's employees, which comes from guidance from the Equal Employment Opportunity Commission:
+    
+    * All employees, including part-time and temporary workers, are counted for purposes of determining whether an employer has a sufficient number of employees.
+    
+    * An employee is someone with whom the employer has an employment relationship. The existence of an employment relationship is most readily (but not exclusively) shown by a person's appearance on the employer's payroll.
+    
+    * Independent contractors are not counted as employees. This is because the work they perform is based on an independent contractual relationship, not an employment relationship.
+    
+    **About this answer.** Akin Gump has provided this answer pro bono, in support of the work of PartnerVine Access to democratize access to legal services. More information on Akin Gump's pro bono activities can be found [here](https://www.akingump.com/en/careers/lawyers/give/pro-bono.html).
+    
+     <center><img src="https://www.akingump.com/cached/40262/images/logo-black.svg" width="200"></center>
+    
+    
+progress: 10
+field: Civil_Rights_Act
+section: Civil Rights Act
+---
+question: |
+  Civil Rights Act: Protected traits
+subquestion: |  
+  Is your discrimination claim based on:
+  
+  * race, 
+  * color, 
+  * sex (including pregnancy, childbirth and related conditions), 
+  * religion or 
+  * national origin?
+yesno: Title_VII_applies
+help:
+  label: Help
+  heading: Note regarding pregnancy, age, disability or genetic information claims
+  content: |
+    **Does your claim concern age, disability or genetic information?**
+    
+    Don't worry, if your claim is in respect of age, disability or genetic information, we will get to that later in the interview. These questions are in relation to the Civil Rights Act of 1964, which doesn't cover age, disability or genetic information.
+    
+    **Does your claim concern pregnancy, childbirth or related medical conditions?**
+    
+    Pregnancy, childbirth or related medical conditions are included in discrimination claims based on sex for our purposes here. 
+    
+    **Background.** The Pregnancy Discrimination Act of 1978 extended the protection of Title VII of the Civil Rights Act of 1964 to include pregnancy, childbirth and related medical conditions. "Related medical conditions" is the subject of judicial interpretation and may include infertility and abortion.
+    
+    The Pregnancy Discrimination Act of 1978 also prohibits harassment and retaliation. It also requires that employers treat employees, who are temporarily unable to perform job functions because of pregnancy or related medical conditions, the same as other employees who are temporarily disabled. Equal treatment includes holding positions open for pregnancy-related leave for the same time period as for disability or sick leave.
+progress: 12
+---
+question: |
+  Civil Rights Act: Disparate Treatment/Impact
+subquestion: |
+  Is the discrimination based on an employer's policy?
+yesno: discrimination_based_on_employer_policy
+help:
+  label: Help
+  heading: What constitutes an employer policy?
+  content: |
+   A policy can be in writing or communicated orally by management.
+   
+   If the policy is in writing, then you'll need a copy of that policy to support your claim. 
+   
+   The policy doesn't have to be in writing for you to have a claim for discrimination though. If the policy has been communicated orally by management, that can also be grounds for a discrimination claim.
+   
+   If your claim proceeds to court, the judge or jury will decide if the employer's policy is discriminatory. They'll consider the written policy (if there is one), and the testimony of witnesses to a policy communicated orally by management. If a written policy is not followed by management, they will consider that as well.
+progress: 14
+---
+question: |
+  Civil Rights Act: Disparate Treatment/Impact
+subquestion: |
+  Is the employer's policy facially neutral?
+yesno: facially_neutral_policy
+help:
+  label: Help
+  heading: What is a facially neutral policy?
+  content: |
+   A policy that is not facially neutral intentionally treats some people less favorably than others because of their race, color, sex, religion or national origin.
+progress: 16
+---
+question: |
+  Civil Rights Act: Disparate Treatment
+subquestion: |
+  Is there direct evidence of discriminatory intent?
+yesnomaybe: direct_evidence_of_discriminatory_intent
+help:
+  label: Help
+  heading: What is direct evidence of discriminatory intent?
+  content: |
+   The best claim for discrimination under the Civil Rights Act is one where there is direct evidence of discriminatory intent. The next questions take you through different situations where there is evidence of discriminatory intent. The situation for this question is that the evidence is fairly clear.
+   
+   The example for direct evidence of discriminatory intent that is usually cited is *Slack v. Havens*. In that case, four black employees were told they must do a janitorial assignment in their department while a white woman was excused.  When asked why the white woman was excused, the employees' immediate supervisor said: “Colored people should stay in their places, they are hired to clean because they clean better”. The black employees refused the cleaning assignment and were fired. They successfully sued, and their case is strong precedent for direct evidence of discriminatory intent.
+
+   If your situation is not that clear, click **I don't know** and we will see if your situation comes closer to the fact pattern for cases that are not as clear.
+progress: 18
+---
+question: |
+  Direct Evidence of Discriminatory Intent
+subquestion: |
+  Your chance for a successful discrimination claim is **good**.
+  
+  **Background.** Based on your response that there is direct evidence of discriminatory intent from your employer or potential employer, you have a strong claim for discrimination under Title VII of the Civil Rights Act of 1964. Direct evidence of discriminatory intent is one of the strongest grounds for a discrimination claim.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: strong_claim_based_on_direct_evidence_of_discriminatory_intent
+---
+question: |
+  Civil Rights Act: Disparate Treatment
+subquestion: |
+  This next question goes to a situation where your employer or potential employer may have had mixed motives. You do not need to know that your protected trait was the only motivating factor at the time of your employer or potential employer's decision, only that it actually played a part in the decision.
+  
+  Did your protected trait actually motivate your employer or potential employer's decision?
+yesnomaybe: Price_Waterhouse_claim
+help:
+  label: Help
+  heading: What if my employer had mixed motives?
+  content: |
+   **What if my employer or potential employer may have mixed motives?** In situations where your employer or potential employers may have mixed motives, you must show by a preponderance of the evidence that intentional discrimination was a motivating factor at the time of the decision, even if it was mixed with other motives. Discriminatory remarks may be evidence that discrimination played a part in a decision, but do not by themselves prove discrimination.
+
+   If your situation is not that clear, click **I don’t know** and we will see if your situation comes closer to other fact patterns.
+progress: 20
+---
+question: |
+  You have a valid claim of discrimination.
+subquestion: |
+  **Background.** Based on your response that the protected trait actually motivated your employer's decision, you have a valid claim for discrimination. You are required to show that a preponderance of evidence indicates that intentional discrimination was a motivating factor at the time of the decision, even it if was mixed with other motives.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: valid_Price_Waterhouse_claim
+---
+question: |
+  Civil Rights Act: Disparate Treatment
+subquestion: |
+  Do you have facts adequate to support the following statements:
+
+  1. Do you belong to a racial minority or other protected trait?
+  2. Did you apply and were qualified for a job for which the employer was seeking applicants?
+  3. Despite your qualifications, were you rejected?
+  4. After your rejection, did the position remain open and the employer continued to seek applications from others that had your qualifications?
+help:
+  label: Help
+  heading: What is a protected trait?
+  content: |
+   **How should I define a "racial minority or other protected trait"?** For our purposes, a "racial minority or other protected trait" includes the following characteristics protected by U.S. federal law:
+   
+   * race,
+   * religion,
+   * national origin,
+   * age,
+   * sex,
+   * pregnancy,
+   * familial status,
+   * disability status,
+   * veteran status, and
+   * genetic information.
+   
+   **What if I don't know if the employer continued to seek applications from others that had my qualifications?** If you can find out, we recommend that you do so, as it is important in meeting this element of a claim. If you don't know, click "I don't know" and the interview will continue to gather information for other claims.
+yesnomaybe: McDonnell_Douglas_prima_facie_case
+progress: 22
+---
+question: |
+  Civil Rights Act: Disparate Treatment
+subquestion: |
+  If your potential employer can articulate a legitimate, nondiscriminatory reason for your rejection, can you show that your potential employer's reason is merely a pretext for behavior actually motivated by discrimination?
+yesnomaybe: McDonnell_Douglas_burden_shifting
+help:
+  label: Help
+  heading: Showing that your potential employer's reason was merely a pretext for behavior actually motivated by discrimination
+  content: |
+   If your potential employer can articulate a legitimate, nondiscriminatory reason for your rejection, then the burden is on you to prove that the potential employer's reason was merely a pretext for behavior actually motivated by discrimination. That's a higher burden of proof than would otherwise be the case, and is justified under the case law because the potential employer was able to articulate a legitimate, nondiscriminatory reason for your rejection.
+progress: 24
+---
+question: |
+  You have a valid claim for discrimination.
+subquestion: |
+  **Background.** Based on your responses, you have a valid claim for discrimination. In the course of a case, however, you will have the burden of persuasion, meaning that you will have to provide facts in a civil case that show "by a preponderance of the evidence" that your claim is true.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: valid_McDonnell_Douglas_claim
+progress: 26
+---
+question: |
+  Civil Rights Act: Disparate Impact
+subquestion: |
+  Does your employer's or potential employer's policy have a disparate impact on you because of your protected trait?
+help:
+  label: Help
+  heading: When does an employer's policy have a disparate impact?
+  content: |
+    In this question, the employer's policy may be facially neutral (meaning that it may not intentionally discriminate against a protected group), but, if you can show that the employer uses the policy and the use of the policy disparately impacts a protected group, then you have a claim.
+    
+    Unlike the previous questions, the next questions don't depend on whether you were personally treated differently because of your protected trait, but if your employer or potential employer's conduct impacted a protected group.
+yesnomaybe: disparate_impact
+progress: 28
+---
+question: |
+  Civil Rights Act: Disparate Impact
+subquestion: |
+  Can your employer or potential employer show that the employment practice is necessary for the business?
+yesnomaybe: business_necessity
+help:
+  label: Help
+  heading: Is the employment practice necessary for the business?
+  content: |
+    To show that the employment practice is necessary to the business, your employer or potential employer will need to show that:
+    
+    1. the employment practice relates to the performance of the job, and
+    2. the employment practice relates to the job you are applying for.
+progress: 30
+---
+question: |
+  Your employer has a valid defense to your claim.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: business_necessity_defense
+---
+question: |
+  Civil Rights Act: Disparate Impact
+subquestion: |
+  Can you show an alternative employment practice that serves the employer's interest and that the employer has refused to adopt?
+help:
+  label: Help
+  heading: How do I show an alternative employment practice that serves the employer's interest and that the employer has refused to adopt?
+  content: |
+    The employer is likely to try to demonstrate that the discriminatory practice is necessary for business, so you need to show that:
+    
+    * there is an alternative employment practice that doesn't have the discriminatory effect,
+    * the alternative employment practice serves the employer's interest, and 
+    * the employer refused to adopt the practice.
+yesno: alternative_employment_practice
+progress: 32
+---
+question: |
+  You have a valid claim under the Civil Rights Act of 1964.
+subquestion: |
+  Your claim is that the employment practice your employer or potential employer used was discriminatory under the disparate impact theory of Title VII of the Civil Rights Act of 1964.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: valid_disparate_impact_claim
+---
+question: |
+  You have a claim under the Civil Rights Act of 1964. 
+subquestion: |
+  Your claim is under Title VII of the Civil Rights Act of 1964. Based on your answers, your employer or potential employer may claim that the discriminatory practice was necessary for business. Your claim is based on the employment practice having a disparate impact on the group protected by the Title VII of the Civil Rights Act of 1964. Your employer or potential employer will likely claim that the employment practice was necessary (the "Business Necessity Defense"), and you will need to show that there is an alternative employment practice that does not have the discriminatory effect, serves the employer's interest, and that the employer refused to adopt that alternative employment practice.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: disputed_disparate_impact_claim
+---
+question: |
+  Civil Rights Act: Hostile Work Environment
+subquestion: |
+  Is your claim for discrimination based on a hostile work environment?
+help:
+  label: Help
+  heading: Introduction to section on Hostile Work Environment
+  content: |
+    We just finished the section on whether an employer's policy is the basis for a discrimination claim. 
+    
+    This section concerns a hostile work environment, which is a different basis for a discrimination claim. The next few questions discuss the elements of a hostile work environment. If you are unsure if your claim for discrimination is based on a hostile work environment, click "yes" and we will guide you through those elements.
+yesno: hostile_work_environment
+progress: 34
+---
+question: |
+  Civil Rights Act: Hostile Work Environment
+subquestion: |
+  Have there been:
+  
+  * sexual conduct or comments about sexual activity, or
+  * conduct or comments relating to your gender or sexual orientation?
+help:
+  label: Help
+  heading: About sexual conduct or comments about sexual activity, or conduct or comments relating to your gender or sexual orientation
+  content: |
+    Regarding who needs to engage in the conduct or make the comments, the harasser can be your supervisor, a supervisor in another area, a co-worker, or someone who is not an employee of your employer, such as a client or customer.
+    
+    For your claim to be successful, the conduct should reasonably be considered to adversely affect your work environment, or an employment decision affecting you as an employee is based upon your acceptance or rejection of such conduct.
+yesno: conduct_or_comments
+progress: 36
+---
+question: |
+  Civil Rights Act: Hostile Work Environment
+subquestion: |
+  Were the comments or conduct unwelcome?
+help:
+  label: Help
+  heading: When are comments or conduct unwelcome?
+  content: |
+    Unwelcome conduct can be verbal or physical, and can include intimidation, ridicule, insult, comments, or physical conduct based on your protected status. 
+    
+    “Sexual” harassment is a particular type of unwelcome conduct that includes sexual advances, requests for sexual favors or dates, remarks about your appearance, discussions, remarks or jokes of a sexual nature, and/or other verbal or physical harassment of a sexual nature. The harasser can be your supervisor, a supervisor in another area, a co-worker, or someone who is not an employee of your employer, such as a client or customer.
+    
+    For your claim to be successful, the unwelcome conduct should reasonably be considered to adversely affect your work environment, or an employment decision affecting you as an employee is based upon your acceptance or rejection of such conduct. 
+yesno: conduct_or_comments_unwelcome
+progress: 38
+---
+question: |
+  Civil Rights Act: Hostile Work Environment
+subquestion: |
+  Were the comments or conduct abusive or pervasive?
+help:
+  label: Help
+  heading: When are comments or conduct abusive or pervasive?
+  content: |
+    Comments or conduct would be considered abusive or pervasive if a reasonable person would consider the work environment intimidating, hostile, or abusive. 
+    
+    If your discrimination claim were to go to court, a judge or jury would decide if a reasonable person would consider the comments or conduct abusive or pervasive.
+yesno: conduct_or_comments_abusive_or_pervasive
+progress: 40
+---
+question: |
+  You have a valid claim under the Civil Rights Act of 1964. 
+subquestion: |
+  Your claim is that your employer created or allowed for a hostile work environment.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: hostile_work_environment_claim
+---
+question: |
+  Civil Rights Act: Hostile Work Environment
+subquestion: |
+  Have there been threats against you at work and were they carried out? For instance, were your terms of employment altered?
+yesno: threats_carried_out
+progress: 42
+---
+question: |
+  You have a valid claim under the Civil Rights Act of 1964. 
+subquestion: |
+  Your claim is that your employer created or allowed for a hostile work environment. Your responses indicate that there were threats against you that were carried out, which makes your claim stronger than a claim without evidence of retaliation.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: hostile_work_environment_claim_with_retaliation
+---
+question: |
+  Disabilities Act
+subquestion: |
+  Now we will ask you questions about the Americans with Disabilities Act of 1990, which prohibits discrimination because of disabilities in many circumstances.
+  
+  Is your claim of discrimination in respect of a disability?
+help:
+  label: Help
+  heading: What is the definition of a disability?
+  content: |
+    We are now starting the section on disability discrimination claims.
+    
+    **What is the definition of a disability?**
+    
+    A disability is defined as a physical or mental impairment that substantially limits one or more major life activities, a person who has a history or record of such an impairment, or a person who is perceived by others as having such an impairment.
+    
+    If you would like background information on disability claims, the Equal Employment Opportunity Commission has information [here](https://www.eeoc.gov/disability-discrimination).
+yesno: disability
+progress: 44
+field: Disabilities_Act
+section: Disabilities Act
+---
+question: |
+  Disabilities Act, continued
+subquestion: |
+  Can you perform the functions of your job without any kind of accommodation by your employer?
+help:
+  label: Help
+  heading: What is an accommodation by an employer?
+  content: |
+    **What is an accommodation by an employer?**
+    
+    An accommodation by an employer is assistance or changes to a position or workplace that will enable you to do your job despite your disability.
+yesno: disability_no_accommodation_required
+progress: 46
+---
+question: |
+  Disabilities Act, continued
+subquestion: |
+  Did your employer discriminate against you on the basis of your disability and have no defenses?
+yesno: disability_no_defense
+progress: 48
+---
+question: |
+  You have a valid claim under the Americans with Disabilities Act of 1990. 
+subquestion: |
+  Your claim is that you can perform the functions of your job without any kind of accommodation by your employer and your employer discriminated against you with no defenses. As a result, you have a valid claim for discrimination under the Disabilities Act of 1990.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: Disabilities_Act_claim
+---
+question: |
+  Disabilities Act, continued
+subquestion: |
+  Can you perform the essential functions of your job or potential job with reasonable accommodation by your employer?
+help:
+  label: Help
+  heading: What is a reasonable accommodation by an employer?
+  content: |
+    **What is a *reasonable* accommodation by an employer?**
+    
+    A reasonable accommodation by an employer is reasonable assistance or changes to a position or workplace that will enable you to do your job despite your disability. 
+    
+    If an accommodation by an employer would impose undue hardship on the employer, then it would not be considered a reasonable accommodation.
+    
+    Deciding what is a reasonable accommodation or an undue hardship depends on the facts and circumstances of a case, and would be decided by a judge or jury if your dispute went to court.
+yesno: disability_reasonable_accommodation
+progress: 50
+---
+question: |
+  Disabilities Act, continued
+subquestion: |
+  Will the accommodation impose undue hardship on the operation of your employer or potential employer's business?
+help:
+  label: Help
+  heading: What is undue hardship?
+  content: |
+    **What is undue hardship?**
+    
+    If an accommodation by an employer would impose undue hardship on the employer, then it would not be considered a reasonable accommodation. Employers are required to provide reasonable accommodations for a disability, but if the accommodation would result in undue hardship, the employer is not required to provide the accommodation.
+    
+    Deciding what is a reasonable accommodation or an undue hardship depends on the facts and circumstances of a case, and would be decided by a judge or jury if your dispute went to court.
+yesno: disability_undue_hardship
+progress: 52
+---
+question: |
+  Disabilities Act, continued
+subquestion: |
+  Did your employer provide the accommodation?
+
+  For this question, the accommodation is the one that would be considered reasonable and would not impose undue hardship on the employer.
+yesno: no_accommodation
+progress: 54
+---
+question: |
+  You have a valid claim under the Americans with Disabilities Act of 1990. 
+subquestion: |
+  Your claim is that you can perform the essential functions of your job if your employer or potential employer reasonably accomodated your disability. Your responses indicated that the reasonable accommodation would not impose undue hardship on the operation of the employer's business, so you have a claim under the Disabilities Act.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: Disabilities_Act_claim_reasonable_accommodation
+---
+question: |
+  You do not have a valid claim under the Americans with Disabilities Act of 1990. 
+subquestion: |
+  Your responses indicate that you could not perform essential functions of the job with reasonable accommodation or that the accommodation would impose undue hardship on the operation of the employer's business. As a result, your claim is not likely to be successful under the Americans with Disabilities Act of 1990.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: undue_hardship_or_no_reasonable_accommodation
+---
+question: |
+  Equal Pay Act
+subquestion: |
+  Now we will ask you questions about the Equal Pay Act of 1963, which prohibits discrimination in compensation because of your sex.
+  
+  Is your claim based on unequal pay for equal work performed by the opposite sex?
+help:
+  label: Help
+  heading: Further help on unequal pay for equal work
+  content: |
+    Another way to frame this question that may help is:
+    
+    *Are employees of the opposite sex in the same establishment receiving unequal pay for equal work?*
+    
+    In considering this question:
+    
+    * Is the work of employees of the opposite sex substantially equal in skill, effort required and responsibility?
+    * Is the difference in pay based on the gender or sex of the employees?
+    * The jobs need not be identical, but they must be substantially equal. 
+    * Job content (not job titles) determines whether jobs are substantially equal. 
+    * All forms of pay are covered by this law, including salary, overtime pay, bonuses, stock options, profit sharing and bonus plans, life insurance, vacation and holiday pay, cleaning or gasoline allowances, hotel accommodations, reimbursement for travel expenses, and benefits. 
+    * If there is an inequality in wages between men and women, employers may not reduce the wages of either sex to equalize their pay.
+    
+    If you would like background information on equal pay claims, the Equal Employment Opportunity Commission has information [here](https://www.eeoc.gov/equal-paycompensation-discrimination).
+yesno: unequal_pay
+progress: 56
+field: Equal_Pay_Act
+section: Equal Pay Act
+---
+question: |
+  You have a claim under the Equal Pay Act of 1963.
+subquestion: |
+  Based on your answers, you have a claim under the Equal Pay Act of 1963 because you have not been paid equally for equal work.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: equal_pay_claim
+---
+question: |
+  Age Discrimination Act
+subquestion: |
+  Now we will ask you questions about the Age Discrimination in Employment Act of 1967, which prohibits age discrimination in employment.
+  
+  Are you 40 years of age or older and is your claim in respect of discrimination on the basis of your age?
+help:
+  label: Help
+  heading: Link to EEOC
+  content: |
+    The Age Discrimination in Employment Act of 1967 applies only to employees or applicants who are 40 years of age or older.
+    
+    If you think your claim is in respect of discrimination on the basis of age, click **yes** and we will lead you through more questions to understand if protections apply. 
+    
+    If you would like background information on age discrimination claims, the Equal Employment Opportunity Commission has information [here](https://www.eeoc.gov/age-discrimination).
+yesno: age
+progress: 58
+field: Age_Discrimination_Act
+section: Age Discrimination Act
+---
+question: |
+  Age Discrimination Act, continued
+subquestion: |
+  Does your employer or potential employer have 20 or more employees?
+yesno: employer_more_than_20
+help:
+  label: Help
+  heading: 20 or more employees requirement for Age Discrimination in Employment Act of 1963
+  content: |
+    The Age Discrimination in Employment Act of 1963 does not apply to companies with less than 20 employees.
+    
+    It is worth mentioning here that, if your employer has less than 20 employees, you may want to consider state or local law. The Discrimination Claims Navigator does not cover state or local law, and we recommend you contact qualified counsel to review any potential claims you may have under state or local law.
+progress: 60
+---
+question: |
+  Age Discrimination Act, continued
+subquestion: |
+  Were you fired on the basis of your age or the status of your pension?
+help:
+  label: Help
+  heading: Understanding the status of your pension
+  content: |
+    Two questions come up that are the subject of specific language in the *Age Discrimination in Employment Act of 1967* that concern a company's ability to restrict benefits under a pension plan that may be helpful to you. Both are exemptions in the law that allow companies to limit benefits as long as those limitations are done without regard to age.
+    
+    **Can a company limit the amount of benefits a plan provides?**
+    
+    As long as the limitation is without regard to age, a company can limit the amount of benefits a plan provides.
+    
+    **Can a company limit the years of service or years of participation taken into account in determining the accrual of benefits?**
+    
+    A company can limit the years of service or years of participation taken into account in determining the accrual of benefits.
+yesno: age_disparate_treatment
+progress: 62
+---
+question: |
+  Age Discrimination Act, continued
+subquestion: |
+  Can you answer either of the two questions below affirmatively?
+
+  * Were you opposed to an employment practice of your employer?
+  * Have you participated in any proceedings or in filing charges against your employer on the basis of your employer's employment practice?
+yesno: opposed_employment_practice
+progress: 64
+---
+question: |
+  Age Discrimination Act, continued
+subquestion: |
+  Can you meet all of the requirements below?
+
+  * Did you have a reasonable, good faith belief that the employment practice was unlawful?
+  * Did you engage in statutorily protected expression?
+  * Did you suffer an adverse employment action (hiring, firing or demotion)?
+  * Is there any connection between the employee's statutorily protected expression and the adverse employee action?
+yesno: age_retaliation
+progress: 66
+---
+question: |
+  You have a claim under the Age Discrimination in Employment Act of 1963. 
+subquestion: |
+  Your responses indicate that you have a valid claim under the Age Discrimination in Employment Act of 1963. Your responses indicate that your employer has more than 20 employees (which is required for the application of this law), you were treated differently because of your age, you opposed the employment practice of your employer and were retaliated against. If the court agrees with your view of the facts and circumstances, then you have a good case for discrimination under the Age Discrimination in Employment Act of 1963. Cases like this one are often decided based on arguments over the facts and circumstances, and in a court a judge or jury would decide those facts and circumstances.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: age_claim
+---
+question: |
+  Genetic Information Nondiscrimination Act
+subquestion: |
+  Now we will ask you questions about the Genetic Information Nondiscrimination Act of 2008, which prohibits discrimination on the basis of genetic information in many circumstances.
+  
+  Were you discriminated against on the basis of genetic information?
+help:
+  label: Help
+  heading: Background information on genetic information claims
+  content: |
+    If you would like background information on genetic information discrimination claims, the Equal Employment Opportunity Commission has information [here](https://www.eeoc.gov/genetic-information-discrimination).
+yesno: genetic_information
+progress: 68
+field: Genetic_Information_Nondiscrimination_Act
+section: Genetic Information Nondiscrimination Act
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Did you apply for a job and the employer failed or refused to hire you for that specific job?
+yesno: genetic_information_applicant_not_hired
+progress: 70
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Was the employer's failure or refusal to hire you because of your genetic information?
+help:
+  label: Help
+  heading: Failure or refusal to hire because of genetic information
+  content: |
+    If your case went to court, you'd need to prove that your potential employer failed or refused to hire you because of your genetic information. In a court, the judge or jury would decide if they thought your potential employer failed or refused to hire you because of your genetic information.
+yesno: genetic_information_caused_not_hiring
+progress: 72
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_applicant_claim
+progress: 74
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Has your employer made any classification, segregation or limitation of its employees?
+help:
+  label: Help
+  heading: Disparate treatment under Genetic Information Nondiscrimination Act
+  content: |
+    For this type of claim under the Genetic Information Nondiscrimination Act, you need to show that you have been treated differently. A later question asks if that disparate treatment was because of your genetic information.
+yesno: genetic_information_disparate_treatment
+progress: 76
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Does the classification, segregation or limitation made by your employer adversely affect or tend to adversely affect: 
+  
+  * your status as an employee, or
+  * your employment opportunities?
+help:
+  label: Help
+  heading: Adverse disparate treatment under Genetic Information Nondiscrimination Act
+  content: |
+    The previous question asked if you were treated differently by your employer because of a classification, segregation or limitation. This question asks if that treatment was bad for you. Did the disparate treatment adversely affect you?
+yesno: genetic_information_disparate_treatment_employment_effect
+progress: 78
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Did your employer make the classification, segregation or limitation because of your genetic information?
+yesno: genetic_information_disparate_treatment_cause_is_discrimination
+progress: 82
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_disparate_treatment_claim
+progress: 84
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Has you employer requested, required or purchased your or any of your family member's genetic information?
+yesno: genetic_information_request
+progress: 86
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Was your employer's request or requirement made by mistake?
+help:
+  label: Help
+  heading: Employer's request or requirement made by mistake
+  content: |
+    Employers may be excused from liability if they made a request or requirement by mistake. If your case went to court, the judge or jury would decide if they thought the employer's request or requirement was made by mistake, based on the evidence they are provided.
+yesno: genetic_information_mistaken_request
+progress: 88
+---
+question: |
+  You do not have a claim for discrimination under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  If your employer requested, required or purchased you or your family member's genetic information by mistake, you do not have a claim for discrimination under the Genetic Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_mistaken_request_defense
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Does your employer offer health or genetic services whether or not as part of a wellness program?
+yesno: genetic_information_health_request
+progress: 89
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Have you given prior, knowing, voluntary and written authorization for the genetic service?
+help:
+  label: Help
+  heading: Prior, knowing, voluntary and written authorization for a genetic service
+  content: |
+    If you gave prior, knowing, voluntary and written consent to the transfer of genetic information, you would not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+yesno: genetic_information_health_request_consent
+progress: 90
+---
+question: |
+  You do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Because you gave prior, knowing, voluntary and written consent to the transfer of genetic information, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_health_request_consent_defense
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Will it be only you (or your family member if the family member is receiving genetic services) and the licensed health care professional or board certified genetic counselor involved in providing such services who will receive individually identifiable information concerning the results of such services?
+yesno: genetic_information_health_request_medical_professional_exemption
+progress: 91
+---
+question: |
+  You do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Because the genetic information is being shared for health reasons and the only person receiving the information is appropriately licensed, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_health_request_medical_professional_exemption_defense
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Will the genetic information not be disclosed to your employer?
+yesno: genetic_information_health_request_not_disclosed_to_employer
+progress: 92
+---
+question: |
+  You do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Because the genetic information was not disclosed to your employer and the request was for medical reasons, you do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_health_request_not_disclosed_to_employer_defense
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Has your employer purchased documents that include your medical history which are publicly available?
+
+  Publicly available records include newspapers, magazines, periodicals, and books, but do not include medical databases or court records.
+yesno: genetic_information_publicly_available
+progress: 93
+---
+question: |
+  You do not have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, the genetic information purchased by your employer was publicly available, in which case you do not have a claim for discrimination.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_publicly_available_defense
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Did your employer use your or any of your family member's genetic information to treat you differently in terms of compensation, terms, conditions or privileges of employment?
+yesno: genetic_information_discriminatory_comp_practice
+progress: 94
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, the genetic information was the cause of your discrimination and is grounds for a discrimination claim.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_discriminatory_comp_practice_claim
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Has your employer refused to promote you or denied you a promotion based on your or your family's genetic information?
+yesno: genetic_information_no_promotion
+progress: 95
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, your employer's refusal to promote you or denial of a promotion was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_no_promotion_claim
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Did your employer refuse to select you for a training program and was your employer's refusal to select you for a training program based on your or any of your family member's genetic information?
+yesno: genetic_information_no_training
+progress: 96
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, your employer's refusal to select you for a training program was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_no_training_claim
+---
+event: welcome_back
+question: |
+  Welcome back!
+subquestion: |
+  You are currently in the
+  **${ nav.get_section(display=True) }**
+  section.
+
+  ${ nav }
+
+  Press "Continue" to pick up
+  where you left off.
+buttons:
+  Continue: continue
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Has your employer denied you benefits because of your or any of your family member's genetic information?
+yesno: genetic_information_benefits_denial
+progress: 97
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, your employer's denial of benefits was based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_benefits_denial_claim
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Have you been fired or discharged from employment because of your or any of your family member's genetic information?
+yesno: genetic_information_termination
+progress: 98
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, your employer fired or discharged you from employment based on your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_termination_claim
+---
+question: |
+  Genetic Information Nondiscrimination Act, continued
+subquestion: |
+  Have you been forced to quit by your employer because of your or any of your family member's genetic information?
+yesno: genetic_information_forced_to_quit
+progress: 99
+---
+question: |
+  You have a claim under the Genetic Information Nondiscrimination Act of 2008.
+subquestion: |
+  Based on your response, you have been forced to quit by your employer because of your or your family's genetic information. As a result, you have a discrimination claim under the Genetic Information Nondiscrimination Act of 2008.
+buttons:
+  - Exit: exit
+  - Restart: restart
+event: genetic_information_forced_to_quit_claim
+---
+mandatory: True
+code: |
+  overall_summary = 0.05
+  if len(claims) > 0:
+    for claim in claims:
+      if content[claim].dial > overall_summary:
+        overall_summary = content[claim].dial
+---
+event: summary
+question: Summary
+subquestion: |
+  <div class="gauge gauge--liveupdate" data-value="${ overall_summary }">
+      <div class="gauge__container">
+          <div class="gauge__background"></div>
+          <div class="gauge__center"></div>
+          <div class="gauge__data"></div>
+          <div class="gauge__needle"></div>
+      </div>
+      <div class="gauge__labels mdl-typography__headline">
+          <span class="gauge__label--low">Low</span>
+          <span class="gauge__label--spacer"></span>
+          <span class="gauge__label--high">High</span>
+      </div>
+  </div>
+  % if len(claims) > 0:
+  <h6><center><strong>Summary indicator of claims</strong></center></h6>
+  <p>The summary indicator above reflects the value of your best claim. Since claims are considered independently, the summary doesn't average or add up your claims. If you have more than one valid claim, there may be more of a chance that your claims are considered positively. We have not quantified that chance in this summary.</p>
+  <h6><center><strong>What's next?</strong></center></h6>
+  <p>Read through your individual claim(s) below. Now that you have an initial analysis of your claim(s), you will want to decide if you want to move forward. If you want to move forward, we suggest you consult with a lawyer. A lawyer can help you with several issues that are beyond the scope of this navigator, including:
+  <li>comparing your facts and circumstances to others in a similar situation;</li>
+  <li>understanding how you would do in the court or administrative agency that would hear your claim(s);</li>
+  <li>estimating the value of your claim(s);
+  <li>estimating how much it would cost to pursue your claim(s); and</li>
+  <li>negotiating with your employer or filing your claim(s).</li></p>
+  <h6><center><strong>Lawyer referral</strong></center></h6>
+  <p>We can refer you to a lawyer at no charge. To request a referral, click <strong>Lawyer referral</strong> at the end of this page. We usually respond within 24 hours.</p><hr>
+  <h3>Your individual claims</h3>
+  % for index, claim in enumerate(claims):
+  <h4>Claim #${index + 1}</h4>
+  <h5>${ content[claim].question }</h5>
+  <div class="gauge gauge--liveupdate" data-value="${ content[claim].dial }">
+      <div class="gauge__container">
+          <div class="gauge__background"></div>
+          <div class="gauge__center"></div>
+          <div class="gauge__data"></div>
+          <div class="gauge__needle"></div>
+      </div>
+      <div class="gauge__labels mdl-typography__headline">
+          <span class="gauge__label--low">Low</span>
+          <span class="gauge__label--spacer"></span>
+          <span class="gauge__label--high">High</span>
+      </div>
+  </div>
+  <p>${ content[claim].subquestion }</p><hr>
+  % endfor
+  % else:
+  <h6><center><strong>Summary indicator of claims</strong></center></h6>
+  <p>The summary indicator above reflects the value of your claim(s). Based on your responses, you do not have a good claim for discrimination under federal laws.</p>
+  <p>If you would like to go through the Discrimination Claims Navigator again from the beginning (without your answers from this interview), click <strong>Restart</strong> below.</p>
+  <p>If you would like to go through the answers from this interview, click <strong>Back</strong> in the header above.</p>
+  <h6><center><strong>What's next?</strong></center></h6>
+  <p>We have taken you through an interview that provides an analysis of claims under federal law, but you may have claims under state or local law. You will want to decide if you want to move forward with your claims. If you want to move forward, we suggest you consult with a lawyer. A lawyer can help you with an analysis of state and local law, and help you with several issues that are beyond the scope of this navigator, including:
+  <li>comparing your facts and circumstances to others in a similar situation;</li>
+  <li>understanding how you would do in the court or administrative agency that would hear your claim(s);</li>
+  <li>estimating the value of your claim(s);
+  <li>estimating how much it would cost to pursue your claim(s); and</li>
+  <li>negotiating with your employer or filing your claim(s).</li></p>
+  <h6><center><strong>Lawyer referral</strong></center></h6>
+  <p>We can refer you to a lawyer at no charge. To request a referral, click <strong>Lawyer referral</strong> below. We usually respond within 24 hours.</p>
+  % endif
+buttons:
+  - Exit: exit
+  - Restart: restart 
+action buttons:
+  - label: Download or email
+    action: download
+    color: info
+  - label: Lawyer referral
+    action: refer_lawyer
+    color: dark
+progress: 100
+section: Conclusion
+---
+event: download
+mandatory: True
+question: Your transcript is ready.
+include download tab: False
+attachment:
+  - name: Transcript
+    filename: transcript
+    docx template file: report_template.docx
+    valid formats:
+      - pdf
+---
+event: download_ministerial
+mandatory: True
+question: Your transcript is ready.
+include download tab: False
+attachment:
+  - name: Transcript
+    filename: transcript
+    docx template file: report_ministerial_template.docx
+    valid formats:
+      - pdf
+---
+attachment:
+  - name: Transcript
+    filename: transcript
+    variable name: interview_transcript
+    docx template file: report_template.docx
+    valid formats:
+      - pdf
+---
+attachment:
+  - name: Transcript
+    filename: transcript
+    variable name: interview_transcript_ministerial
+    docx template file: report_ministerial_template.docx
+    valid formats:
+      - pdf
+---
+event: refer_lawyer
+code: |
+  lawyer_referral = True
+  need(is_employer_in_state)
+---
+question: |
+  Jurisdiction check
+subquestion: |
+  Is your employer or potential employer in ${user_info().subdivision_first}?
+fields:
+  - Choose: is_employer_in_state
+    choices:
+      - Yes
+      - No
+  - Employer State: employer_state
+    input type: dropdown
+    code: states_list()
+    show if:
+      variable: is_employer_in_state
+      is: No
+---
+event: lawyer_referral_mail
+code: |
+  if is_employer_in_state == 'Yes':
+    emp_state = user_info().subdivision_first
+  else:
+    emp_state = state_name(employer_state)
+  if employer_religious == True and ministerial_job == True:
+    transcriptPdf = interview_transcript_ministerial
+  else:
+    transcriptPdf = interview_transcript
+  send_email(to='access@partnervine.com', template=lawyer_referral_template, sender='"Partnervine" <noreply@partnervine.com>', attachments=[transcriptPdf])
+  lawyer_referral_requested
+---
+event: lawyer_referral_requested
+question: |
+   Lawyer Referral requested
+subquestion: |
+   <div>Thank you for your request for a Lawyer Referral.<ul><li>We will review your request and get back to you with next steps.</li><li>Our review usually takes 24 hours.</li><li>We will do your Lawyer Referral on a pro bono basis, which means no charge to you or the lawyer you engage.</li></ul>If you have any questions, the best way to reach us is by email at <strong>access@partnervine.com</strong>.<br>&nbsp;</div>
+   
+   Sincerely, 
+   
+   <div><p style="line-height: 15px;"><img src="https://www.partnervine.com/media/image/0e/db/a4/PartnerVine-Access-6-Mar-21-150-px-width-01.png" width="140"><br><br><small>276 Fifth Avenue, Suite 704<br>New York, NY 10001<br>Tel: (646) 583-0621<br>Email: access@partnervine.com</small><br>&nbsp;</p></div>
+buttons:
+  Exit: exit
+action buttons:
+  - label: Continue
+    action: reset_lawyer_referral
+    color: info
+---
+event: reset_lawyer_referral
+code: |
+  undefine('lawyer_referral')
+  undefine('is_employer_in_state')
+  undefine('employer_state')
+---
+template: lawyer_referral_template
+subject: |
+  Lawyer Referral - Discrimination Claims Navigator
+content: |
+  Hello,<br>
+  <p>You have a new lawyer referral request:<p>
+  <p><strong>First Name:</strong> ${user_info().first_name}</p>
+  <p><strong>Last Name:</strong> ${user_info().last_name}</p>
+  <p><strong>Email:</strong> ${user_info().email}</p>
+  <p><strong>Employer State:</strong> ${emp_state}</p>
+  <p>Thanks</p>
+---
+event: post_comment
+code: |
+  set_save_status('ignore')
+  interview = "Discrimination Claims Navigator"
+  question = action_argument('question')
+  comment = action_argument('comment')
+  signoffCheck = action_argument('signoff_check')
+  lawyerTag = action_argument('lawyer_tag')
+  send_email(to='access@partnervine.com', template=comment_template, sender='"Partnervine" <noreply@partnervine.com>')
+  json_response(dict(success=True))
+---
+template: comment_template
+subject: |
+  New Comment - Discrimination Claims Navigator
+content: |
+  Hello Admin,<br>
+  <p>You have a new comment from <strong>${user_info().email}</strong><p>
+  <p><strong>Timestamp:</strong> ${current_datetime()}</p>
+  <p><strong>Question:</strong> ${question}</p>
+  <p><strong>Comment:</strong> ${comment}</p>
+  % if signoffCheck is True:
+  <p><strong>NOTE:</strong> Lawyer indicated that this page has not been signed off by ${lawyerTag}</p>
+  % endif
+  <p>Thanks</p>

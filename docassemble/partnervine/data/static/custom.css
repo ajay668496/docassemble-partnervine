@@ -1,0 +1,172 @@
+.gauge {
+    position: relative;
+}
+
+.gauge__container {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 50%;
+	overflow: hidden;
+	text-align: center;
+	-webkit-transform: translateX(-50%);
+	   -moz-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	     -o-transform: translateX(-50%);
+	        transform: translateX(-50%);
+}
+
+.gauge__background {
+	z-index: 0;
+	position: absolute;
+	background-image: conic-gradient(
+        from -90deg at 50% 100%, 
+        #85dede 0deg 36deg, 
+        #34cece 36deg 72deg, 
+        #40a4a4 72deg 108deg, 
+        #2d7d7d 108deg 144deg, 
+        #232449 144deg 183deg);
+	top: 0;
+	border-radius: 300px 300px 0 0;
+}
+
+.gauge__data {
+	z-index: 1;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 300px 300px 0 0;
+    -webkit-transform-origin: center bottom;
+       -moz-transform-origin: center bottom;
+        -ms-transform-origin: center bottom;
+         -o-transform-origin: center bottom;
+            transform-origin: center bottom;
+}
+
+.gauge__center {
+	z-index: 2;
+	position: absolute;
+	background-color: #fff;
+	margin-right: auto;
+	border-radius: 300px 300px 0 0;
+}
+
+.gauge__marker {
+    z-index: 3;
+    background-color: #fff;
+    position: absolute;
+    width: 1px;
+}
+
+.gauge__needle {
+    z-index: 4;
+    background-color: #ec4f2a;
+    height: 5px;
+    position: absolute;
+    -webkit-transform-origin: left center;
+       -moz-transform-origin: left center;
+        -ms-transform-origin: left center;
+         -o-transform-origin: left center;
+            transform-origin: left center;
+}
+.gauge__needle:after {
+    content: "";
+    border: solid #ec4f2a;
+    border-width: 0 5px 5px 0;
+    padding: 5px;
+    position: absolute;
+    top: -5px;
+    right: 0;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.gauge__labels {
+    display: table;
+    margin: 0 auto;
+    position: relative;
+}
+
+.gauge__label--low {
+    display: table-cell;
+    text-align: center;
+}
+
+.gauge__label--spacer {
+    display: table-cell;
+}
+
+.gauge__label--high {
+    display: table-cell;
+    text-align: center;
+}
+
+.gauge { height: calc(120px + 3em); }
+.gauge__container { width: 240px; height: 120px; }
+.gauge__marker { height: 120px; left: 119.5px; }
+.gauge__background { width: 240px; height: 120px; }
+.gauge__center { width: 144px; height: 72px; top: 48px; margin-left: 48px; }
+.gauge__data { width: 240px; height: 120px; }
+.gauge__needle { left: 120px; top: 115px; width: 60px; }
+.gauge__labels { top: 120px; width: 240px; }
+.gauge__label--low { width: 48px; }
+.gauge__label--spacer { width: 144px; }
+.gauge__label--high { width: 48px; }
+
+
+ @media only screen and (min-width: 400px) {
+    .gauge { height: calc(150px + 3em); }
+    .gauge__container { width: 300px; height: 150px; }
+    .gauge__marker { height: 150px; left: 149.5px; }
+    .gauge__background { width: 300px; height: 150px; }
+    .gauge__center { width: 180px; height: 90px; top: 60px; margin-left: 60px; }
+    .gauge__data { width: 300px; height: 150px; }
+    .gauge__needle { left: 150px; top: 145px; width: 80px; }
+    .gauge__labels { top: 150px; width: 300px; }
+    .gauge__label--low { width: 60px; }
+    .gauge__label--spacer { width: 180px; }
+    .gauge__label--high { width: 60px; }
+}
+
+.gauge--liveupdate .gauge__data,
+.gauge--liveupdate .gauge__needle {
+    -webkit-transition: all 1s ease-in-out;
+       -moz-transition: all 1s ease-in-out;
+        -ms-transition: all 1s ease-in-out;
+         -o-transition: all 1s ease-in-out;
+            transition: all 1s ease-in-out;
+}
+
+.gauge__data {
+    -webkit-transform: rotate(-.50turn);
+       -moz-transform: rotate(-.50turn);
+        -ms-transform: rotate(-.50turn);
+         -o-transform: rotate(-.50turn);
+            transform: rotate(-.50turn);
+}
+.gauge__needle {
+    -webkit-transform: rotate(-.50turn);
+       -moz-transform: rotate(-.50turn);
+        -ms-transform: rotate(-.50turn);
+         -o-transform: rotate(-.50turn);
+            transform: rotate(-.50turn);
+}
+textarea.comment {
+  min-width: 200px;
+  height: 400px;
+}
+.comment-block {
+  min-width: 200px;
+}
+label.comment-label {
+  font-size: 12px;  
+}
+a.btn.danavlink {
+    font-weight: 400;
+    font-size: 1rem !important;
+}
+@media only screen and (min-width: 1200px) {
+  textarea.comment {
+    width: 200px;
+  }
+}
